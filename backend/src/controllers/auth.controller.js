@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import prisma from "../lib/prisma.js";
-import jwt from "jsonwebtoken";
 import { generateToken } from "../lib/jwt.js";
 
 export const register = async (req, res) => {
@@ -81,13 +80,6 @@ export const login = async (req, res) => {
         message: "Email atau Password salah !",
       });
     }
-
-    // jika dibuat tanpa membuat fungsi sendiri
-    // const token = jwt.sign(
-    //   (payload = { id: user.id, email: user.email }),
-    //   (secret = process.env.JWT_SECRET),
-    //   (options = { expiresIn: "1d" })
-    // );
 
     const token = generateToken({ id: user.id, email: user.email }, "1d");
 

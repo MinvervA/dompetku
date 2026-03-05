@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { authRoute } from "./routes/auth.route.js";
+import { categoriesRoute } from "./routes/category.route.js";
 
 // load env data
 dotenv.config();
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoute);
+app.use("/api/categories", categoriesRoute);
 
 const PORT = process.env.PORT || 5000;
 

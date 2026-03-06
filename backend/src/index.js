@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { authRoute } from "./routes/auth.route.js";
 import { categoriesRoute } from "./routes/category.route.js";
+import { transactionRoute } from "./routes/transaction.route.js";
 
 // load env data
 dotenv.config();
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoute);
 app.use("/api/categories", categoriesRoute);
+app.use("/api/transaction", transactionRoute);
 
 const PORT = process.env.PORT || 5000;
 

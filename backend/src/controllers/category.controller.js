@@ -9,6 +9,7 @@ export const getCategories = async (req, res) => {
     // statusnya harus 200 karena bersifat mengambil bukan create ( 201)
     return res.status(200).json({
       success: true,
+      message: "Berhasil mendapatkan semua data category!",
       data: categories,
     });
   } catch (error) {

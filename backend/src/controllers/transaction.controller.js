@@ -146,3 +146,85 @@ export const getSummary = async (req, res) => {
     });
   }
 };
+
+export const getByCategory = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const date = new Date();
+    const month = parseInt(req.query.month) || date.getMonth() + 1;
+    const year = parseInt(req.query.year) || date.getFullYear();
+
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0);
+
+    const groupResult = await prisma.transaction.groupBy({
+      by: ["categoryId"],
+      _sum: { amount: true },
+      where: {
+        userId,
+        type: "EXPENSE",
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+    });
+
+    if (groupResult.length === 0) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          categories: [],
+          totalExpense: 0,
+        },
+      });
+    }
+
+    const totalExpense = groupResult.reduce(
+      (sum, item) => sum + parseFloat(item._sum.amount),
+      0,
+    );
+
+    const categoryIds = groupResult.map((item) => item.categoryId);
+
+    const categoryList = await prisma.category.findMany({
+      where: {
+        id: {
+          in: categoryIds,
+        },
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    // merge groupResult dengan categoryList
+    const categories = groupResult.map((item) => {
+      const category = categoryList.find((c) => c.id === item.categoryId);
+      return {
+        categoryId: item.categoryId,
+        name: category.name,
+        icon: category.icon,
+        total: parseFloat(item._sum.amount),
+        percentage: parseFloat(
+          ((item._sum.amount / totalExpense) * 100).toFixed(1),
+        ),
+      };
+    });
+
+    // sort by total - terbesar dulu
+    categories.sort((a, b) => b.total - a.total);
+
+    return res.status(200).json({
+      success: true,
+      message: "Berhasil mendapatkan data by category!",
+      data: { categories, totalExpense, month, year },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server error!",
+    });
+  }
+};

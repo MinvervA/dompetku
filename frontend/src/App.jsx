@@ -1,16 +1,35 @@
 import { useEffect } from "react";
 import "./App.css";
 import { useAuthStore } from "./store/authStore";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { LoginPage } from "./pages/LoginPage";
 
 function App() {
-  const initialize = useAuthStore((state) => state.checkAuth);
+  const { checkAuth, token, isLoading } = useAuthStore();
 
   useEffect(() => {
-    initialize();
+    checkAuth();
   }, []);
+
+  if (isLoading) return <div>Loading...</div>;
   return (
     <>
-      <div className="text-4xl font-bold">Hallo dunia</div>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/login"
+            element={!token ? <LoginPage /> : <Navigate to="/" />}
+          />
+
+          <Route
+            path="/"
+            element={token ? <div>DASHBOARD</div> : <Navigate to="/login" />}
+          />
+
+          {/* // jika ada route asal */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

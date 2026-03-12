@@ -4,6 +4,7 @@ import { create } from "zustand";
 export const useAuthStore = create((set) => ({
   token: null,
   user: null,
+  isLoading: true,
 
   login: (user, token) => {
     localStorage.setItem("token", token);
@@ -23,15 +24,17 @@ export const useAuthStore = create((set) => ({
 
   checkAuth: async () => {
     try {
+      set({ isLoading: true });
       const token = localStorage.getItem("token");
       if (!token) {
-        set({ user: null, token: null });
+        set({ user: null, token: null, isLoading: false });
         return;
       }
       const res = await api.get("/auth/me");
       set({
         user: res.data.data,
         token,
+        isLoading: false,
       });
     } catch (error) {
       console.error(error);
@@ -39,6 +42,7 @@ export const useAuthStore = create((set) => ({
       set({
         user: null,
         token: null,
+        isLoading: false,
       });
     }
   },

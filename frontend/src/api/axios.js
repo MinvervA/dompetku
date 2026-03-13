@@ -20,7 +20,13 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    console.log(error);
+    const skipRedirectURL = ["/auth/login", "/auth/register"];
+    const shouldSkip = skipRedirectURL.some((url) =>
+      error.config.url.includes(url),
+    );
+
+    if (error.response?.status === 401 && !shouldSkip) {
       localStorage.removeItem("token");
       window.location.href = "/login";
     }

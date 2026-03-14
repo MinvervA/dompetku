@@ -1,6 +1,5 @@
 import api from "@/api/axios";
 import { RegistForm } from "@/components/regist-form";
-import { useAuthStore } from "@/store/authStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

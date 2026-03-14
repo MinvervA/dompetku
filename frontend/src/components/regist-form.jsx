@@ -10,8 +10,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import { Spinner } from "./ui/spinner";
 
-export function LoginForm({
+export function RegistForm({
   className,
   errors,
   register,
@@ -24,14 +25,27 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Regist</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your name ,email, and passowrd below to create your account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="name">Name</Label>
+
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="your full name"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <p style={{ color: "red" }}>{errors.name.message}</p>
+                )}
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
 
@@ -48,9 +62,6 @@ export function LoginForm({
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
-                    Forgot your password?
-                  </a>
                 </div>
                 <Input
                   id="password"
@@ -64,16 +75,23 @@ export function LoginForm({
               <Button
                 type="submit"
                 className="w-full bg-black text-white"
-                variant="outline"
+                variant=""
                 disabled={isSubmitting}
               >
-                Login
+                {isSubmitting ? (
+                  <div className="flex justify-center items-center gap-2 ">
+                    <Spinner />
+                    <span>Sedang diproses...</span>
+                  </div>
+                ) : (
+                  "Register"
+                )}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <Link to={"/regist"} className="underline underline-offset-4">
-                Sign up
+              Already have an account?{" "}
+              <Link to={"/login"} className="underline underline-offset-4">
+                Sign in
               </Link>
             </div>
           </form>

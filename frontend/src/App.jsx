@@ -3,6 +3,7 @@ import "./App.css";
 import { useAuthStore } from "./store/authStore";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
+import { RegisterPage } from "./pages/RegisterPage";
 
 function App() {
   const { checkAuth, token, isLoading } = useAuthStore();
@@ -19,6 +20,10 @@ function App() {
           <Route
             path="/login"
             element={!token ? <LoginPage /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/regist"
+            element={!token ? <RegisterPage /> : <Navigate to="/" />}
           />
 
           <Route

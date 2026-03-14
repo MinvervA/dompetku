@@ -1,9 +1,11 @@
+import api from "@/api/axios";
 import { RegistForm } from "@/components/regist-form";
 import { useAuthStore } from "@/store/authStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import z from "zod";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const schema = z.object({
   name: z.string().trim().nonempty("Wajib diisi!"),
@@ -21,12 +23,26 @@ export const RegisterPage = () => {
   } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data) => {
+    const loadingToas = toast.loading("Sedang diproses...");
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // delay 2 detik
+      const res = await api.post("/auth/register", data);
+      const user = res.data.user;
 
-      console.log("submit:", data);
+      toast.success("Register Berhasil", {
+        description: `Selamat akun dengan nama ${user.name} berhasil dibuat!`,
+        id: loadingToas,
+        position: "top-center",
+      });
+
+      navigate("/login");
     } catch (error) {
       console.error(error);
+      toast.error("Register Gagal", {
+        description:
+          error.response?.data?.message || "Pastikan data sudah benar!",
+        id: loadingToas,
+        position: "top-center",
+      });
       return;
     }
   };

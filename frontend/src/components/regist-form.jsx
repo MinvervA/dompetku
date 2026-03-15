@@ -27,7 +27,7 @@ export function RegistForm({
         <CardHeader>
           <CardTitle className="text-2xl">Regist</CardTitle>
           <CardDescription>
-            Enter your name ,email, and passowrd below to create your account
+            Enter your name ,email, and password below to create your account
           </CardDescription>
         </CardHeader>
         <CardContent>

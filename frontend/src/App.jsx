@@ -4,6 +4,7 @@ import { useAuthStore } from "./store/authStore";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
+import { MainLayout } from "./components/layout/MainLayout";
 
 function App() {
   const { checkAuth, token, isLoading } = useAuthStore();
@@ -26,10 +27,11 @@ function App() {
             element={!token ? <RegisterPage /> : <Navigate to="/" />}
           />
 
-          <Route
-            path="/"
-            element={token ? <div>DASHBOARD</div> : <Navigate to="/login" />}
-          />
+          <Route element={token ? <MainLayout /> : <Navigate to="/login" />}>
+            <Route path="/" element={<div>DASHBOARD</div>} />
+            <Route path="/transactions" element={<div>transaction</div>} />
+            <Route path="/settings" element={<div>setting</div>} />
+          </Route>
 
           {/* // jika ada route asal */}
           <Route path="*" element={<Navigate to="/" />} />

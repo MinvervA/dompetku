@@ -5,7 +5,7 @@ export const useTransactions = () => {
   return useQuery({
     queryKey: ["transaction"],
     queryFn: async () => {
-      const res = await api.get(`/transactions`);
+      const res = await api.get(`/transaction`);
       return res.data.data;
     },
   });

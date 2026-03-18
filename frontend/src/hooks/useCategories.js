@@ -6,7 +6,7 @@ export const useCategoriesExpense = (month, year) => {
     queryKey: ["categories-expense", month, year],
     queryFn: async () => {
       const res = await api.get(
-        `/transactions/by-category?month=${month}&year=${year}`,
+        `/transaction/by-category?month=${month}&year=${year}`,
       );
       return res.data.data;
     },

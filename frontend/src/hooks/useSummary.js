@@ -7,8 +7,10 @@ export const useSummary = (month, year) => {
     // kalau month/year berubah, otomatis refetch
     queryFn: async () => {
       const res = await api.get(
-        `/transactions/summary?month=${month}&year=${year}`,
+        `/transaction/summary?month=${month}&year=${year}`,
       );
+      console.log(res);
+
       return res.data.data;
     },
   });

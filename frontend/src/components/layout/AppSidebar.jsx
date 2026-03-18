@@ -20,14 +20,14 @@ export const AppSidebar = () => {
     <Sidebar>
       <SidebarHeader>
         <div className="">
-          <div className="px-1.5 flex w-full items-center gap-2">
+          <div className="px-1.5 pt-2 flex w-full items-center gap-2">
             <div className="p-2.5 bg-[#6ee7b7] rounded-md">💰</div>
             <div className="text-3xl font-bold">Dompetku</div>
           </div>
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarMenu>
+        <SidebarMenu className="px-1.5 mt-7 space-y-1.5">
           {navItems.map((item) => (
             <SidebarMenuItem key={item.label}>
               <NavLink to={item.path} end={item.path === "/"}>
@@ -35,11 +35,11 @@ export const AppSidebar = () => {
                   <SidebarMenuButton
                     isActive={isActive}
                     className={
-                      isActive ? "font-bold border-gray-200 border" : ""
+                      isActive ? "!font-semibold border-gray-300 border" : ""
                     }
                   >
-                    <item.icon />
-                    <span>{item.label}</span>
+                    <item.icon className="!w-6 !h-6 shrink-0" />
+                    <span className="text-[16px]">{item.label}</span>
                   </SidebarMenuButton>
                 )}
               </NavLink>

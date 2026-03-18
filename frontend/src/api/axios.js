@@ -20,7 +20,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log(error);
+    console.log(error.config);
     const skipRedirectURL = ["/auth/login", "/auth/register"];
     const shouldSkip = skipRedirectURL.some((url) =>
       error.config.url.includes(url),

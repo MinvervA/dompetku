@@ -11,7 +11,7 @@ export const MainLayout = () => {
           <header className="flex h-16 items-center border-b px-10">
             <SidebarTrigger />
           </header>
-          <main className="flex-1 px-4 w-full overflow-auto">
+          <main className="flex-1 px-4 min-w-0 overflow-auto">
             <Outlet />
           </main>
         </SidebarInset>

@@ -26,40 +26,33 @@ export const SummaryCard = ({ summary, isLoading }) => {
       colorMoney: "text-red-600",
     },
   ];
+  console.log(isLoading);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 w-full">
       {cards.map((card) => (
         <Card key={card.label}>
-          {/* <CardHeader> */}
-          {/* </CardHeader> */}
           <CardContent>
             <div className="pt-6">
-              <div className="">
-                {isLoading ? (
-                  <div className="">
-                    <Skeleton className={"h-12 w-12 rounded-full"} />
-                    <Skeleton className={"h-12 w-12 rounded-full"} />
+              {isLoading ? (
+                <div className="space-y-3">
+                  <Skeleton className="h-12 w-12 rounded-md bg-gray-300" />
+                  <Skeleton className="h-5 w-24 bg-gray-300" />
+                  <Skeleton className="h-8 w-[150px] bg-gray-300" />
+                </div>
+              ) : (
+                <>
+                  <div className={`p-2 ${card.color} w-fit rounded-md`}>
+                    <card.icon size={30} />
                   </div>
-                ) : (
-                  <div className="">
-                    <div className={`p-2 ${card.color} w-fit rounded-md`}>
-                      <card.icon size={30} />
-                    </div>
-                    <CardTitle className="text-lg">{card.label}</CardTitle>
+                  <CardTitle className="text-lg mt-3">{card.label}</CardTitle>
+                  <div
+                    className={`mt-3 text-2xl font-extrabold ${card.colorMoney}`}
+                  >
+                    Rp {card.value?.toLocaleString("id-ID") ?? 0}
                   </div>
-                )}
-              </div>
-              <div
-                className={`mt-3 text-2xl font-extrabold ${card.colorMoney}`}
-              >
-                Rp{" "}
-                {isLoading ? (
-                  <Skeleton className={"h-4 w-[150px]"} />
-                ) : (
-                  (card.value?.toLocaleString("id-ID") ?? 0)
-                )}
-              </div>
+                </>
+              )}
             </div>
           </CardContent>
         </Card>

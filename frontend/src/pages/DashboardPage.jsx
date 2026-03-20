@@ -1,4 +1,5 @@
 import { SummaryCard } from "@/components/dashboard/SummaryCard";
+import { TransactionCard } from "@/components/dashboard/TransactionCard";
 import { useCategoriesExpense } from "@/hooks/useCategories";
 import { useSummary } from "@/hooks/useSummary";
 import { useTransactions } from "@/hooks/useTransaction";
@@ -29,6 +30,12 @@ export const DashboardPage = () => {
 
       <div className="w-full">
         <SummaryCard isLoading={loadingSummary} summary={summary} />
+      </div>
+      <div className="">
+        <TransactionCard
+          transaction={transaction}
+          isLoading={loadingTransaction}
+        />
       </div>
     </div>
   );

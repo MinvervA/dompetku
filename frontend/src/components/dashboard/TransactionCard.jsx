@@ -17,6 +17,18 @@ export const TransactionCard = ({ transaction, isLoading }) => {
             <transaction.category.icon />
           </div>
         </div> */}
+        {transaction.map((item, index) => {
+          // const icon = iconMap[]
+          return (
+            <div className="" key={index}>
+              <div
+                className={`p-2 ${item.type === "EXPENSE" ? "bg-red-900" : "bg-green-900"}`}
+              >
+                {/* <item.description.category.icon /> */}
+              </div>
+            </div>
+          );
+        })}
       </CardContent>
     </Card>
   );

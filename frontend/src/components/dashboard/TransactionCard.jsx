@@ -10,6 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Badge } from "../ui/badge";
 
 export const TransactionCard = ({ transaction, isLoading }) => {
   console.log(transaction);
@@ -24,6 +25,10 @@ export const TransactionCard = ({ transaction, isLoading }) => {
     entertainment: Gamepad2,
     freelance: Wrench,
     others: MoreHorizontal,
+  };
+
+  const formatRupiah = (nominal) => {
+    return "Rp " + nominal.toLocaleString("id-ID");
   };
 
   return (
@@ -52,12 +57,33 @@ export const TransactionCard = ({ transaction, isLoading }) => {
                 >
                   <IconComponent className={`w-6 h-6`} />
                 </div>
-                <div className="flex">
-                  <div className="flex items-center">
-                    <div className="">{item.description}</div>
-                    <div className=""></div>
+                <div className="flex justify-between items-center w-full">
+                  <div className="">
+                    <div className="flex items-center gap-2">
+                      <div className="font-bold">{item.description}</div>
+                      <div className="">
+                        <Badge
+                          variant={"outline"}
+                          className={"text-blue-500 border-blue-500 border"}
+                        >
+                          {item?.category?.name}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="text-sm">
+                      {new Date(item.date).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </div>
                   </div>
-                  <div className=""></div>
+                  <div
+                    className={`${isIncome ? "text-green-600" : "text-red-600"} font-bold`}
+                  >
+                    {isIncome ? "+" : "-"}
+                    {formatRupiah(item?.amount)}
+                  </div>
                 </div>
               </div>
             </div>

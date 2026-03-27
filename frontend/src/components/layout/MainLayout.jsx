@@ -8,10 +8,10 @@ export const MainLayout = () => {
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <SidebarInset>
-          <header className="flex h-16 items-center border-b px-10">
+          <header className="flex h-16 items-center border-b px-10 sticky top-0 bg-white z-50 transition-shadow">
             <SidebarTrigger />
           </header>
-          <main className="flex-1 px-4 min-w-0 overflow-auto">
+          <main className="flex-1 px-4 w-full mx-auto max-w-7xl">
             <Outlet />
           </main>
         </SidebarInset>

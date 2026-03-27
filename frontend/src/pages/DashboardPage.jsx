@@ -33,7 +33,7 @@ export const DashboardPage = () => {
       </div>
       <div className="">
         <TransactionCard
-          transaction={transaction}
+          transactions={transaction}
           isLoading={loadingTransaction}
         />
       </div>
